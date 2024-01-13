@@ -1,0 +1,30 @@
+{
+    "manifest_version": 2,
+    "name": "YouTube Ad Skip",
+    "version": "1.0",
+    "description": "Automatically clicks the skip button on ads. Check out the GitHub link for details.",
+    "homepage_url": "https://github.com/Kepler-17c/YouTube-Ad-Skip",
+    "browser_specific_settings": {
+        "gecko": {
+            "id": "youtube-ad-skip@kepler-17c.space"
+        }
+    },
+    "icons": {
+        "48": "icons/48.png",
+        "96": "icons/96.png"
+    },
+    "permissions": [],
+    "content_scripts": [
+        {
+            "matches": [
+                "*://*.youtube.com/watch?v=*"
+            ],
+            "js": [
+                "index.js"
+            ]
+        }
+    ],
+    "web_accessible_resources": [
+        "resources/*"
+    ]
+}
