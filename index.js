@@ -1,7 +1,12 @@
 // settings
 let intervalMs = 500;
 let iconReplacerMaxAttempts = 10_000 / intervalMs;
+
+// constants
 let svgNamespace = 'http://www.w3.org/2000/svg';
+let muteButtonSelector = 'button.ytp-mute-button.ytp-button';
+let skipButtonSelector = 'button.ytp-ad-skip-button-modern.ytp-button';
+let videoPlaysSoonMessageSelector = 'div.ytp-ad-text.ytp-ad-preview-text-modern';
 
 
 class IconReplacer {
@@ -73,6 +78,22 @@ new IconReplacer(
 
 // start the skipping routine
 setInterval(
-    () => document.querySelector('button.ytp-ad-skip-button-modern.ytp-button')?.click(),
+    () => document.querySelector(skipButtonSelector)?.click(),
+    intervalMs
+);
+// start ad mute routing
+setInterval(
+    () => {
+        let muteButton = document.querySelector(muteButtonSelector);
+        if (document.querySelector(videoPlaysSoonMessageSelector)) {
+            if (muteButton.dataset.titleNoTooltip == 'Mute') {
+                muteButton.click();
+            }
+        } else {
+            if (muteButton.dataset.titleNoTooltip == 'Unmute') {
+                muteButton.click();
+            }
+        }
+    },
     intervalMs
 );

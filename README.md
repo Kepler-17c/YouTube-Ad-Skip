@@ -3,6 +3,7 @@
 ## Features
 
 - automatically click the 'skip' button on ads
+- mute non-skippable ads
 - display ready state by replacing the top-left icon and play-button on videos with this extension's icon
 
 ## Development
