@@ -4,9 +4,9 @@ let iconReplacerMaxAttempts = 10_000 / intervalMs;
 
 // constants
 let svgNamespace = 'http://www.w3.org/2000/svg';
+let adDetectionSelector = 'div.video-ads.ytp-ad-module';
 let muteButtonSelector = 'button.ytp-mute-button.ytp-button';
-let skipButtonSelector = 'button.ytp-ad-skip-button-modern.ytp-button';
-let videoPlaysSoonMessageSelector = 'div.ytp-ad-text.ytp-ad-preview-text-modern';
+let skipButtonSelector = 'button.ytp-skip-ad-button';
 
 
 class IconReplacer {
@@ -76,21 +76,35 @@ new IconReplacer(
     }
 );
 
+function isPlayingAd () {
+    let adContainer = document.querySelector(adDetectionSelector);
+    if (!adContainer) {
+        return false;
+    }
+    let adContainerStyles = window.getComputedStyle(adContainer).display;
+    let isVisible = adContainerStyles == "none" || adContainerStyles == "hidden";
+    return !isVisible;
+}
+
+function isSoundMuted () {
+    return document.querySelector(muteButtonSelector).querySelector('clipPath') == null;
+}
+
 // start the skipping routine
 setInterval(
     () => document.querySelector(skipButtonSelector)?.click(),
     intervalMs
 );
-// start ad mute routing
+// start ad mute routine
 setInterval(
     () => {
         let muteButton = document.querySelector(muteButtonSelector);
-        if (document.querySelector(videoPlaysSoonMessageSelector)) {
-            if (muteButton.dataset.titleNoTooltip == 'Mute') {
+        if (isPlayingAd()) {
+            if (!isSoundMuted()) {
                 muteButton.click();
             }
         } else {
-            if (muteButton.dataset.titleNoTooltip == 'Unmute') {
+            if (isSoundMuted()) {
                 muteButton.click();
             }
         }
