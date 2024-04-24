@@ -6,7 +6,7 @@ let iconReplacerMaxAttempts = 10_000 / intervalMs;
 let svgNamespace = 'http://www.w3.org/2000/svg';
 let adDetectionSelector = 'div.video-ads.ytp-ad-module';
 let muteButtonSelector = 'button.ytp-mute-button.ytp-button';
-let skipButtonSelector = 'button.ytp-skip-ad-button';
+let skipButtonSelector = 'button.ytp-skip-ad-button,button.ytp-ad-skip-button-modern';
 
 
 class IconReplacer {
